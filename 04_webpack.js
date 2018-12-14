@@ -57,7 +57,7 @@ yarn add html-webpack-plugin -D  // html плагин
       entry: PATHS.source + '/index.js',
       output: {
         path: PATHS.build,
-        filename: '[name].js'
+        filename: 'js/[name].js'
       },
       plugins: [
         new HtmlWebpackPlugin({
@@ -191,5 +191,121 @@ touch webpack/{devserver.js,pug.js}
           common,
           developmentConfig  // developmentConfig here
         ]);
+      }
+    };
+
+
+// ExtractTextPlugin
+// отдельный файл для css
+yarn add extract-text-webpack-plugin -D
+
+touch webpack/css.extract.js
+
+// in css.extract.js
+
+    // fallback исп для указания путей в css
+    const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+    module.exports = function (paths) {
+      return {
+          module: {
+            rules: [
+              {
+                text: /\.scss$/,
+                include: paths,
+                use: ExtractTextPlugin.extract({
+                  publicPath: '../',
+                  fallback: 'style-loader',
+                  use: ['css-loader', 'sass-loader'],
+                });
+              },
+              {
+                text: /\.css$/,
+                include: paths,
+                use: ExtractTextPlugin.extract({
+                  fallback: 'style-loader',
+                  use: 'css-loader',
+                });
+              },
+            ]
+          },
+          plugins: [
+            new ExtractTextPlugin('./css/[name].css ');
+          ],
+        }
+      }
+    };
+
+
+// CommonChunkPlugin
+// объединяет повторяющиеся файлы
+
+// in webpack.config.js
+    ...
+    const webpack = require('webpack');
+    
+    module.exports = {
+      ...
+      plugins: [
+        new HtmlWebpackPlugin({
+          filename: 'index.html',
+          chunks: ['index', 'common'],
+          template: PATH.source + '/pages/index/index.html'
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'common'
+        })
+      ]
+    };
+
+
+// ProvidePlugin
+// фильтр модулей
+// подключает только используемые модули
+    // пример
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    });
+
+
+// UglifyJsPlugin
+touch js.uglify.js 
+
+// in js.uglify.js
+    const webpack = require('webpack');
+
+    module.exports = function() {
+      return {
+        plugins: [
+          new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            compress: {
+              warnings: false,
+            }
+          })
+        ]
+      }
+    };
+
+
+// file-loader
+
+yarn add file-loader -D
+
+// in js.uglify.js
+    module.exports = function() {
+      return {
+        module: {
+          rules: [
+            {
+              test: /\.(jpg|png|svg)$/,
+              loader: 'file-loader',
+              options: {
+                name: 'images/[name].[ext]'
+              },
+            },
+          ],
+        }
       }
     };
