@@ -104,6 +104,7 @@ preserveAspectRatio="none" // сброс пропорций, полностью 
   
 <image x="" y="" width="..." height="..." xlink:href="" style="filter:url(#filterBlur)">
   
+  
 // - css animation
 // пример: https://codepen.io/Krabaton/pen/zoLzzP
   
@@ -122,3 +123,38 @@ preserveAspectRatio="none" // сброс пропорций, полностью 
 stroke-dasharray: [нарисовать] [пропустить];
 
 
+// - pie chart / create diagramm
+// пример: https://codepen.io/Krabaton/pen/OmVGpx
+
+
+
+// - icons
+
+// - спрайты
+// create
+<svg class="hidden-elem" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="none">
+  <symbol id="icon" viewBox="0 0 100 100">
+    <path ... />
+  </symbol>
+</svg>
+    
+// usage
+<svg>
+  <use xlink:href="#icon"></use>
+</svg>
+  
+// если из подключаемого файла
+<svg>
+  <use xlink:href="img/sprite.svg#icon"></use>
+</svg>
+  
+// svg4everybody хак для ie
+// https://github.com/jonathantneal/svg4everybody
+  
+// - minification
+// https://jakearchibald.github.io/svgomg/ (online)
+// https://github.com/svg/svgo (module)
+  
+// - sprites
+// https://www.npmjs.com/package/svg-sprite-generator
+    
