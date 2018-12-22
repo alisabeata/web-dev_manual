@@ -157,4 +157,10 @@ stroke-dasharray: [нарисовать] [пропустить];
   
 // - sprites
 // https://www.npmjs.com/package/svg-sprite-generator
+  
+// - links
+// http://tutorials.jenkov.com (tutorial)
+// https://codepen.io/hkfoster/pen/uJpso (animation)
+// http://benpickles.github.io/peity/ (diagrams)
+// http://glivera-team.github.io/svg/2016/06/13/svg-sprites-2.html (sprites) 
     
