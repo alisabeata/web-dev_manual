@@ -10,6 +10,8 @@
 // https://vectr.com
 
 
+// для работы с реактом https://github.com/smooth-code/svgr
+
 
 // - библиотеки для работы с svg
 
