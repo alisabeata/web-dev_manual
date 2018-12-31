@@ -215,3 +215,4 @@ $sides: left, right, bottom, top;
  
 // sass globe
 // модуль, который позволяет делать импорт папками
+@import "blocks/**/*;
