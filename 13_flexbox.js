@@ -11,7 +11,7 @@
 //  к блоку
 // display: (flex, inline-flex)
 // justify-content: (flex-start, flex-end, center, space-between, space-around)
-// flex-derection: (row, row-reverse)
+// flex-direction: (row, row-reverse, column, column-reverse)
 // align-items: (stretch, flex-start, flex-end, center, baseline)
 
 //  к элементу
@@ -48,21 +48,21 @@
 // - смена расположения осей
 // main-axis
 .container {
-  flex-derection: row;
+  flex-direction: row;
 }
 // cross-axis
 .container {
-  flex-derection: column;
+  flex-direction: column;
 }
 
 // - смена направления осей
 // слева направо (default)
 .container {
-  flex-derection: row;
+  flex-direction: row;
 }
 // справа налево
 .container {
-  flex-derection: row-reverse;
+  flex-direction: row-reverse;
 }
 
 
