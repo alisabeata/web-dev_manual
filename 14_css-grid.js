@@ -4,6 +4,8 @@
 
 display: grid;
 
+// display: grid; может быть вложенным
+
 grid-template-columns: 200px 200px 200px; // 3 колонки по 200px
 grid-template-columns: 1fr 1fr; // >> 2 колонки по одной фракции
 grid-template-columns: repeat(2, 1fr 2fr); // повторить два раза две колонки по 1 и 2 фракции (4 чередующиеся колонки)
@@ -11,6 +13,9 @@ grid-template-columns: minmax(150px, 250px); // первая колонка тя
 
 
 grid-template-rows: 150px 150px; // высота первой и второй строки по 150px
+
+// grid-template: columns / rows;  короткая запись для св-в
+
 
 grid-auto-rows: 100px; // высота колонок по умолчанию
 grid-auto-rows: minmax(150px, auto); // auto позволяет растягивать блок под контент
@@ -69,8 +74,61 @@ grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); // с auto-fit эл
 // grid-row — явное указание строки
 
 
-// выравнивание
+// горизонтальное выравнивание
 justify-items: stretch; // по умолчанию (растянутые блоки)
 justify-items: start; // блоки не растягиваются, отобр как инлайн-блок с выравниванием вначале
 justify-items: end; // в конце
 justify-items: center; // в центре
+
+// вертикальное выравнивание
+align-items: (stretch, start, end, center);
+
+//  выравнивание для элемента
+justify-self: (stretch, start, end, center);
+align-self: (stretch, start, end, center);
+
+
+
+// название для областей
+.header {
+  grid-area: header;
+}
+
+.aside {
+  grid-area: aside;
+}
+
+.menu {
+  grid-area: menu;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+// for mobile
+.grid {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "article"
+    "footer"
+}
+
+// for web
+@media (min-width: 640px) {
+  .grid {
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "menu article"
+      "footer footer"  
+  }
+}
+
+// точка — пропуск блока
+"footer ."
+
+// растянет меню по вертикали
+"menu article"
+"menu footer" 
