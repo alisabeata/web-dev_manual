@@ -105,5 +105,70 @@ window.addEventListener('scroll', () => {
   
 // - background blur
 
+.blur__form {
+  filter: blur(20px);
+}
 
+const blur = () => {
+  const wrapper = document.querySelector('.blur__form-wrapper');
+  const form = document.querySelector('.blur__form');
+  
+  return {
+    set: function () {
+      const imgWidth = document.querySelector('.blur__bkg').offsetWidth;
+      const posLeft = - wrapper.offsetLeft;
+      const posTop = - wrapper.offsetTop;
+      const blurStyle = form.style;
+      
+      blurStyle.backgroundSize = `${imgWidth}px auto`;
+      blurStyle.backgroundPosition = `${posLeft}px ${posTop}px`;
+    }
+  };
+};
+  
+  
+window.addEventListener('resize', blur.set);
+  
+  
+  
+// - отрисовка svg stroke при скролле 
 
+.svg .group {
+  stroke-dasharray: 1200; // картинка должна быть нарисована одной линией
+  stroke-dashoffset: 1200; // стартовое значение, картинка не видна, тк попадает в пробел пунктира
+}
+  
+// анимация stroke-dashoffset к нулю создаёт эффект отрисовки линии
+  
+  
+const drawStroke = () => {
+  const svg = document.getElementById('svg-element');
+  const svgPath = document.querySelectorAll('#svg-element path');
+  const windowMargin = window.innerHeight / 3;
+  const svgRect = svg.getBoundingClientRect();
+  const svgPos = svgRect.top;
+  
+  return {
+    draw: function (wScroll) {
+      const startAnimate = wScroll - svgPos + windowMargin;
+      const pixelRemainder = svgPos - wScroll;
+      const persentsRemainder = 100 - Math.ceil(pixelRemainder / windowMargin * 100);
+      const persentsDraw = 1200 / 100 * persentsRemainder; // 1200 значение stroke-dasharray
+      
+      if (startAnimate >= 0) {
+        const drawAmount = 1200 - persentsDraw;
+        
+        if (drawAmount > 0) {
+          svgPath.forEach(item => item.style.strokeDashoffset = drawAmount);
+        }
+      }
+    },
+    erase: function (wScroll) {}
+  };
+};
+  
+window.addEventListener('scroll', () => {
+  let wScroll = window.pageYOffset;
+  
+  drawStroke.draw(wScroll);
+});
