@@ -5,7 +5,6 @@
 // JS описывает логику
 // GLSL -- язык шейдеров
 
-
 // - шейдеры
 
 // вершинный шейдер
@@ -68,27 +67,68 @@ Player = {
     
     // отрисовка канвас
     container.appendChild(this.renderer.domElement);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(container.offsetWidth, container.offsetHeight);
     
     // свет
     const light = new THREE.AmbientLight();
     this.scene.add(light);
     
-    // форма
-    const geometry = new THREE.SphereGeometry(5, 10, 10);
-    const metreial = new THREE.MeshPhongMaterial({color: 0x000000});
-    const mesh = new THREE.Mesh(geometry, material);
-    this.scene.add(mesh);
     
+    // текстуры
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load('img.jpg', function (texture) {
+      // форма
+      const geometry = new THREE.SphereGeometry(5, 10, 10);
+      const metreial = new THREE.MeshPhongMaterial({map: texture});
+      const mesh = new THREE.Mesh(geometry, material);
+      Player.scene.add(mesh);
+      
+      // добавить на сцену
+      Player.animate();
+    });
+    
+    // трекболы (реакция на движение мыши)
     this.controls = new THREE.TrackballControls(this.camera, container);
+    this.controls.zoomSpeed = 0.1;
     
-    // добавить на сцену
-    this.animate();
+    this.loadObj();
+    this.showPoints();
+  },
+  
+  // загрузка текстуры
+  loadObj: function () {
+    textureLoader.load('otherImg.jpg', function (texture) {
+      const objLoader = new THREE.OBJLoader();
+      objLoader.load('model.obj', function (object) {
+        object.treverse(function (child) {
+          if (child instanceof THREE.Mesh) {
+            child.material.map = Player.texture;
+          }
+        });
+      });
+    });
+  },
+  
+  // орисовка фрагментов (текстурирование поверхности 3d объектами, прим. мех, трава, огонь)
+  showPoints: function () {
+    const geometry = new THREE.TorusGeometry(100, 30, 15, 100);
+    const material = new THREE.PointsMaterial({color: 0xff0000});
+    const particles = new THREE.Points(geometry, material);
+    
+    Player.scene.add(particles);
   },
   
   animate: function () {
     requestAnimationFrame(this.animate.bind(this));
+    
     this.controls.update();
+    
+    // анимация модели
+    Player.mesh.rotation.y += 0.05; // вращение
+    Player.mesh.position.z += 0.05; // перемещение
+    
+    // рендер
     this.renderer.render(this.scene, this.camera);
   }
 }
@@ -96,12 +136,12 @@ Player = {
 window.onload = Player.init;
 
 
-
 // - движение камеры
 // трекболы (отвечают за движение камеры) подключаются отдельно
 // https://github.com/mrdoob/three.js/tree/dev/examples/js/controls
 
 this.controls = new THREE.TrackballControls(this.camera, container);
+this.controls.zoomSpeed = 0.1;
 
 
 // - отладка
@@ -111,3 +151,6 @@ this.controls = new THREE.TrackballControls(this.camera, container);
 // нужно добавить в глобальную обл видимости
 window.scene = this.scene;
 
+
+// - примеры
+// http://stars.chromeexperiments.com/
