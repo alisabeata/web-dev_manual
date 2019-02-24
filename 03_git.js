@@ -42,8 +42,14 @@ git rm --catched dir/filename.html
 // reset
 git reset --hard [commit number]
 
+// delete the last commit if the branch is available locally
+git reset HEAD^ --hard
+git push <<remote>> -f
+
+
 
 // git flow
 // подход к организации коммитов
+// https://github.com/nvie/gitflow
 // https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 // https://danielkummer.github.io/git-flow-cheatsheet/index.ru_RU.html
