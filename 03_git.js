@@ -14,6 +14,10 @@ git status
 git commit -m "commit name"
 git remote add origin https://... (* https://... == git@github.com:name/project.git)
 git push -u origin master
+
+// branches
+git checkout branchname    // переключение веток
+git checkout -b branchname // создать ветку и переключиться на неё
                        
 // ssh
 ssh-keygen
