@@ -45,5 +45,5 @@ git reset --hard [commit number]
 
 // git flow
 // подход к организации коммитов
-// https://www.atlassian.com/git/tutorials/comparing-workflows
+// https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 // https://danielkummer.github.io/git-flow-cheatsheet/index.ru_RU.html
