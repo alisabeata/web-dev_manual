@@ -208,3 +208,45 @@ app.post('/test', function (req, res) {
 app.get('/test/:name', function (req, res) {
   console.log(req.params.name);
 });
+
+
+
+// route-example.js
+const app = require('express')();
+
+app.use(function (req, res, next) {
+  console.log('\n\nalways'); // вызывается всегда
+  next();
+});
+
+app.get('/a', function (req, res) {
+  console.log('/a: route terminated');
+  res.send('a'); // если происходит отправка, дальнейшие миддлвары не отрабатывают
+});
+
+app.get('/b', function (req, res, next) {
+  console.log('/b: route not terminated');
+  throw new Error('b failed');
+  // если сгенерированна ошибка, то в параметры след обработчика первым приходит error 
+});
+
+app.use('/b', function (err, req, res, next) {
+  console.log('/b: error detected and pass on');
+  next(err);
+});
+
+app.get('/c', function (req, res, next) {
+  console.log('/c: error thrown');
+  next();
+});
+
+app.use(function (err, req, res, next) {
+  console.log('unhandled error detected: ' + err.message); // вызовется только если сгенерирована ошибка через throw new Error()
+  // эта ошибка сработает, если передан err в некст next(err);
+  res.send('500 server error');
+});
+
+app.use(function (req, res) {
+  console.log('route not handled'); // вызывается если не будет авброшено иск через throw new Error()
+  res.send('404 not found');
+});
