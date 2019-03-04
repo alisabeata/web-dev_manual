@@ -250,3 +250,105 @@ app.use(function (req, res) {
   console.log('route not handled'); // вызывается если не будет авброшено иск через throw new Error()
   res.send('404 not found');
 });
+
+
+// - nodemon
+npm i -D nodemon
+// утилита для запуска сервера с рестартом сервера при изменении файлов
+// запуск через package json вместо npm сервера
+
+
+// утилиты для работы с сервером
+"dependencies": {
+  "body-parser" : v,             // распарсивает post-запросы
+  "connect-mongo",               // подключение для хранения сессий в mongo
+  "cookie-parser",               // cookie парсер
+  "debug",                       // хранения сессий
+  "express",
+  "express-session",             // хранения сессий express
+  "formidable",                  // для загрузки картинок
+  "jsonfile",                    // для чтения json файлов
+  "mongoose",                    // для работы с mongo DB
+  "morgan",                      // используется для регистрации деталей запроса
+  "nodemailer",                  // для работы с отправкой писем
+  "nodemailer-smtp-transport",   
+  "serve-favicon"
+}
+
+
+// пример app.js
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const http = require('http');
+const favicon = require('favicon');
+const logger = require('logger');
+const cookieParser = require('cookieParser');
+const bodyParser = require('bodyParser');
+const app = express();
+const server = http.createServer(app);
+
+const jsonfile = require('jsonfile');
+const fileVersionControl = 'version.json';
+const currentStatic = require('./gulp/config').root;
+const config = require('./config');
+
+// сетап / view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+
+// подключение статика
+app.use(express.static(path.join(__dirname, currentStatic)));
+
+// (!) необходимо создать дирекорию routes с вложенными index.js, mail.js, admin.js
+app.use('/', require('./routes/index'));
+app.use('/contact', require('./routes/mail'));
+app.use('/admin', require('./routes/admin'));
+
+// обработчики ошибок (в миддлварах)
+app.use(function (req, res, next) {
+  res.status(404);
+  res.render('404');
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500);
+  res.render('500');
+});
+
+server().listen(3000, 'localhost');
+server.on('listening', function () {
+  jsonfile
+    .readFile(fileVersionControl, function (err, obj) {
+      if (err) {
+        console.log('');
+        console.log('Сервер остановлен');
+        process.exit(1);
+      } else {
+        app.locals.settings = {
+          suffix: obj.suffix,
+          version: obj.version
+        }
+        console.log('');
+        
+        // создание папки для загрузки картинок
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir);
+        }
+        
+        console.log('Express started on port %s');
+      }
+    });
+});
+
+
+// in config.json
+{
+  "upload": "public/upload"
+}
