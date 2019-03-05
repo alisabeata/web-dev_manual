@@ -307,7 +307,7 @@ app.use(express.static(path.join(__dirname, currentStatic)));
 
 // (!) необходимо создать дирекорию routes с вложенными index.js, mail.js, admin.js
 app.use('/', require('./routes/index'));
-app.use('/contact', require('./routes/mail'));
+app.use('/contacts', require('./routes/contacts'));
 app.use('/admin', require('./routes/admin'));
 
 // обработчики ошибок (в миддлварах)
@@ -352,3 +352,19 @@ server.on('listening', function () {
 {
   "upload": "public/upload"
 }
+
+
+// in ./routes/index
+const express = require('express');
+const router = express.Router();
+
+router.get('/', function (req, res) {
+  const obj = {
+    title: 'Main page'
+  };
+  
+  Object.assign(obj, req.app.locals.settings);
+  res.render('pages/index', obj);
+});
+
+module.exports = router;
