@@ -368,3 +368,15 @@ router.get('/', function (req, res) {
 });
 
 module.exports = router;
+
+
+// in ./routes/blog
+router.get('/blog', function (req, res) {
+  ...
+});
+  
+  
+  
+  
+// - отправка писем
+
