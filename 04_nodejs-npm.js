@@ -27,6 +27,8 @@ npm i -S modulename
 
 npm link modulename  // прилинковывает пакет из глобального в локальный
 
+npm repo modulename  // открывает репозиторий модуля
+
 
 // modules
 

@@ -379,4 +379,34 @@ router.get('/blog', function (req, res) {
   
   
 // - отправка писем
+	
+// https://nodemailer.com/about/
 
+npm i nodemailer --save
+
+// ограничение в день не больше 500 писем
+
+router.post('/', function (req, res) {
+  if (!req.body.name || !req.body.email || ! req.body.text) {
+    return res.json({status: 'укажите данные'});
+  }
+  
+  const transporter = nodemailer.createTransport(config.mail...);
+  const mailOptions = {
+    from: `"${req.body.name}" <${req.body.email}>`,
+    to: config.mail.smtp.auth.user,
+    subject: config.mail.subject,
+    text: req
+      .body
+      .text
+      .trim()
+      .slice(0, 500) + `/n Отправлено с <${req.body.email}>`
+  };
+  
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      return res.json({status: 'произошла ошибка при отправке'});
+    }
+    return res.json({status: 'отправлено'});
+  });
+});
