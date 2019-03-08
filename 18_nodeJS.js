@@ -410,3 +410,84 @@ router.post('/', function (req, res) {
     return res.json({status: 'отправлено'});
   });
 });
+
+	
+// - отправка файлов (new FormData())
+  
+npm i formidable --save
+	
+// upload.js
+export default function (url, data, callback) {
+  const xhr = new XMLHttpRequest();
+  
+  xhr.open('POST', url, true);
+  xhr.onload = function () {
+    const result = JSON.parse(xhr.responseText);
+    callback(result.status);
+  };
+  xhr.send(data);
+}
+
+// admin.js
+import fileUpload from './upload';
+  
+const formUpload = document.querySelector('#upload');
+  
+function prepareSendFile(event) {
+  event.preventDefault();
+  
+  const resultContainer = formUpload.querySelector('.status');
+  const formData = new FormData();
+  const file = document.querySelector('#file-select').files[0];
+  const name = document.querySelector('#file-desc').value;
+  
+  formData.append('photo', file, file.name);
+  formData.append('name', name);
+  
+  resultContainer.innerHTML = 'uploading...';
+  fileUpload('/admin/upload', formData, function (data) {
+    resultContainer.innerHTML = data;
+    formUpload.reset();
+  });
+}
+  
+formUpload.addEventListener('submit', prepareSendFile);
+  
+  
+// routes/admin.js
+const express = require('express');
+const router = express.Router();
+
+router.get('/upload', function (req, res) {
+  const obj = {
+    title: 'Admin page'
+  };
+  
+  Object.assign(obj, req.app.locals.settings);
+  res.render('pages/admin', obj);
+});
+  
+router.post('/upload', function (req, res) {
+  const form = new formidable.IncomingForm();
+  
+  form.uploadDir = path.join(process.cwd(), config.upload); // process.cwd() директория где находимся в текущий момент
+  form.parse(req, function (err, fields, files) {
+    if (err) {
+      return res.json({status: 'не удалось загрузить картинку'});
+    }
+    if (!fields.name) {
+      return res.json({status: 'не указано описание картинки'});
+    }
+    
+    fs.rename(file.photo.path, path.join(path.join(config.upload, files.photo.name)), function (err) {
+      if (err) {
+        fs.unlink(path.join(config.upload, files.photo.name)); // удаляет файл который лежит в config.upload
+        fs.rename(files.photo.path, files.photo.name); // переименовывает
+      }
+      res.json({status: 'картинка загружена'});
+    });
+  });
+});
+
+module.exports = router;
+  
