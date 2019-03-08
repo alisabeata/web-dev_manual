@@ -491,3 +491,6 @@ router.post('/upload', function (req, res) {
 
 module.exports = router;
   
+  
+// (!) pm2 защищает node от падения, следить за обработкой ошибок, если возникает необработанная ошибка перезагружает приложение
+// https://github.com/Unitech/pm2
