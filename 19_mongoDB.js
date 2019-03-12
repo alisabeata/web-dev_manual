@@ -237,3 +237,28 @@ mongoose
 require('./models/db-close');
 require('./models/blog');
 require('./models/pic');
+...
+
+
+// in admin.js
+const mongoose = require('mongoose');
+...
+router.post('/addpost', (req, res) => {
+  if (!req.body.title || !req.body.date || !req.body.text) {
+    return res.json({status: 'укажите данные'});
+  }
+  // создание записи блога
+  const Model = mongoose.model('blog');
+  const item = new Model({title: req.body.title, date: new Date(req.body.date), body: req.body.text});
+  
+  item.save().then(
+    // отправление и обработка ответа в браузер
+    dbAnswer => {
+      return res.json({status: 'запись успешно добавлена'});
+    }, 
+    err => {
+      const error = Object.keys(err.errors).map(cur => err.errors[cur].message).join(', ');
+      
+      res.json({status: "при добавлении произошла ошибка: " + error});
+    });
+});
