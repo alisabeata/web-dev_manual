@@ -102,6 +102,19 @@ Person.findOne({'name.last': 'Doe'}, 'name occupation', function (err, person) {
 Person.find({'name.last': 'Doe'}, 'name occupation', function (err, docs) {});
 Person.find({'name.last': 'Doe'}, 'name occupation').exec(function (err, docs) {});
 
+// $and - и
+db.basename.find({$and: [{'loves': 'carrot'}, {'loves': 'grape'}]});
+// $ne - отрицание
+db.basename.find({'gender': {$ne: 'm'}});  
+// $lte - меньше или равно
+db.basename.find({'weight': {$lte: 600}});  
+// $lt - меньше
+db.basename.find({'weight': {$lt: 600}});
+// $gte - больше или равно
+db.basename.find({'weight': {$gte: 600}});  
+// $gt - больше
+db.basename.find({'weight': {$gt: 600}});  
+
 
 // добавление
 const Person = mongoose.model('Person', someSchema);
@@ -142,3 +155,85 @@ Model.remove({name: 'Alice'}, function (err, person) {
     return handleError(err);
   }
 });
+
+
+// запуск
+cd /mongo/bin // из рута, там где уст монго
+mongod --config mongodb.config
+
+
+// описание схем
+/models
+  /--blog.js
+  /--pic.js
+  /--db-close.js
+  
+  
+// in db-close.js
+const mongoose = require('mongoose');
+const config = require('../config');
+  
+mongoose.connection.on('connected', function () {
+  console.log('mongoose default connection open mongodb://' + config...);
+});
+
+mongoose.connection.on('error', function (err) {
+  console.log('mongoose default connection error: ' + err);
+});
+
+mongoose.connection.on('disconnected', function (err) {
+  console.log('mongoose default connection disconnected');
+});
+
+// когда node процесс закрыт
+process.on('SIGINT', function () {
+  mongoose.connection.close(function () {
+    console.log('mongoose default connection disconnected through app termination');
+  });
+});
+
+
+// коннект базы данных
+
+// in config.json (см 18_nodeJS.js)
+{
+  "db"" {
+    "host": "localhost",
+    "port": "27017",
+    "name": "test",
+    "user": "",
+    "password": ""
+  },
+  "upload": "public/upload",
+  "mail": {
+    "subject": "Mail title",
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 465,
+      "secure": true,
+      "auth": {
+        "user": "mail@test.com",
+        "pass": "password12345"
+      }
+    }
+  }
+}
+
+// in app.js (см 18_nodeJS.js)
+...
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+mongoose
+  .connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}`, {
+    user: config.db.user,
+    pass: config.db.password
+  })
+  .catch(err => {
+    console.error(err);
+    throw err;
+  });
+
+require('./models/db-close');
+require('./models/blog');
+require('./models/pic');

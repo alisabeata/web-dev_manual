@@ -350,7 +350,19 @@ server.on('listening', function () {
 
 // in config.json
 {
-  "upload": "public/upload"
+  "upload": "public/upload",
+  "mail": {
+    "subject": "Mail title",
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 465,
+      "secure": true,
+      "auth": {
+        "user": "mail@test.com",
+        "pass": "password12345"
+      }
+    }
+  }
 }
 
 
