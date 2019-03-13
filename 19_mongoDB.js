@@ -262,3 +262,7 @@ router.post('/addpost', (req, res) => {
       res.json({status: "при добавлении произошла ошибка: " + error});
     });
 });
+
+
+// https://mlab.com/
+// облачный сервис (500MB free)
