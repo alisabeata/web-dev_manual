@@ -268,6 +268,17 @@ passport.use(new GithubStrategy({
 }));
 
 
+// in config.js
+// параметры указываются из настроек гитхаба
+module.exports = {
+  github: {
+    clientID: 'f2131231....',
+    clientSecret: 'a0233jxsf...',
+    callbackURL: 'http://localhost:3000/auth/github/callback'
+  }
+}
+
+
 // in app.js
 ...
 const passport = require('passport');
