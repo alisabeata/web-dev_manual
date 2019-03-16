@@ -153,3 +153,131 @@ router.post('/', isAdmin, (req, res) => {
 });
 
 module.exports = render;
+
+
+
+// - passport js
+// http://www.passportjs.org/
+// плагин для авторизации (локально или через соцсети)
+
+
+// in routes/index.js
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+
+router.get('/', (req, res) => {
+  res.render('index', {});
+});
+
+router.post('/submit', (req, res, next) => {
+  passport.authenticate('loginUser', (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.json({status: 'укажите правильный логин и пароль'})
+    }
+    req
+      .logIn(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.json({status: 'аутентификация пройдена'});
+      })
+  });
+})(req, res, next);
+
+router.post('/submit', (req, res) => {
+  req
+    .session
+    .destroy();
+  res.json({status: 'сессия удалена'});
+});
+  
+module.exports = router;
+
+
+// in routes/private.js
+const express = require('express');
+const router = express.Router();
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res
+    .status(401)
+    .send('авторизуйтесь');
+}
+
+router.get('/', isLoggedIn, (req, res) => {
+  res.render('private', {});
+});
+
+module.exports = router;
+
+
+// in config-passport.js
+const passport = require('passport');
+const locakalStrategy = require('passport-lockal').Strategy;
+const GithubStrategy = require('passport-github2').Strategy;
+const config = require('./config');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const Model = mongoose.model('user');
+let user = {};
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  done(null, user);
+});
+
+// локальная стратегия
+passport.use('loginUsers', new LocalStrategy((username, passport, done) => {
+  const newpassword = crypto
+    .createHash('md5')
+    .update(password)
+    .digest('hex');
+  Model
+    .findOne({login: username})
+    .then(item => {
+      user = {
+        username: item.login,
+        password: item.password,
+        id: item._id
+      };
+      if (username === user.username && newpassword === user.password) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
+    });
+}));
+
+// стратегия github
+passport.use(new GithubStrategy({
+  clientID: config.github.clientID,
+  clientSecret: config.github.clientSecret,
+  callbackURL: config.github.callbackURL
+}, function (accessToken, refreshToken, profile, done) {
+  return done(null, profile);
+}));
+
+
+// in app.js
+...
+const passport = require('passport');
+
+...
+require('./config/config-passport');
+app.use(passport.initialize());
+app.use(passport.session());
+...
+// маршруты
+app.use('/', require('./routes/index'));
+app.use('/private', require('./routes/private'));
+app.use('/auth', require('./routes/github'));
