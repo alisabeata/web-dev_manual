@@ -224,8 +224,7 @@ process.on('SIGINT', function () {
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-mongoose
-  .connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}`, {
+mongoose.connect(`mongodb://${config.db.host}:${config.db.port}/${config.db.name}`, {
     user: config.db.user,
     pass: config.db.password
   })
