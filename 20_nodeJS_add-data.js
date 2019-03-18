@@ -1,9 +1,6 @@
 // NodeJS
 
 // логин
-// чат с веб-сокет
-
-
 // - добавление пользователя
 // in user.js
 const mongoose = require('mongoose');

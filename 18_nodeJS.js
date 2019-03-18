@@ -322,7 +322,7 @@ app.use(function (err, req, res, next) {
   res.render('500');
 });
 
-server().listen(3000, 'localhost');
+server().listen(3000, 'localhost'); // на хостинге заменить на (80, '0.0.0.0')
 server.on('listening', function () {
   jsonfile
     .readFile(fileVersionControl, function (err, obj) {
