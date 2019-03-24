@@ -177,3 +177,8 @@ contain: none | strict | content | [ size || layout || style || paint ]
 // - векторная иллюстрация      - 1
 // - векторная ui-картинка      - 0
 // - растровая ui-картинка      - 0
+
+
+// - source-map-explorer
+// https://www.npmjs.com/package/source-map-explorer
+// утилита для оценки производительности
