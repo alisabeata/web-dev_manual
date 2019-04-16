@@ -26,3 +26,7 @@ webSocket.onclose = function (event) {
 
 // https://socket.io/
 // обёртка (поллифил) для работы с веб сокетами
+
+
+// запуск локального хоста на мобильном
+// https://medium.com/@wiekatz/testing-web-applications-running-on-localhost-with-an-iphone-7db6258b8f2
