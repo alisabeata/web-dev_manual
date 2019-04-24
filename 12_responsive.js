@@ -134,3 +134,13 @@ screen and (min-resolution: 144dpi) {}
   background: -webkit-image-set(url('...') 2x);
 }
   
+	
+// определение соответисию медиаквери
+// https://developer.mozilla.org/ru/docs/Web/API/Window/matchMedia
+window.matchMedia(mediaQueryString)
+
+if (window.matchMedia("(min-width: 400px)").matches) {
+  // least 400px
+} else {
+  // less 400px
+}
