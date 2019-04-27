@@ -179,6 +179,14 @@ contain: none | strict | content | [ size || layout || style || paint ]
 // - растровая ui-картинка      - 0
 
 
+
+// - инструменды для оптимизации
+
+// REACT
 // - source-map-explorer
-// https://www.npmjs.com/package/source-map-explorer
 // утилита для оценки производительности
+// https://www.npmjs.com/package/source-map-explorer
+
+
+// JS
+// https://github.com/nolanlawson/optimize-js
