@@ -188,5 +188,12 @@ contain: none | strict | content | [ size || layout || style || paint ]
 // https://www.npmjs.com/package/source-map-explorer
 
 
-// JS
-// https://github.com/nolanlawson/optimize-js
+// - стиль кода
+// (!) лучше не создавать вложенные функции, те делать более плоскую структуру
+// bad
+function a() {
+  function b() {}
+}
+// good
+function a() {}
+function b() {}
