@@ -187,6 +187,9 @@ contain: none | strict | content | [ size || layout || style || paint ]
 // утилита для оценки производительности
 // https://www.npmjs.com/package/source-map-explorer
 
+// - (!!! TO USE) webpack-bundle-analyzer
+// https://www.npmjs.com/package/webpack-bundle-analyzer
+
 // - fastdom
 // исп для анимаций
 // фрейминг без requestAnimationFrame
