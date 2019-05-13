@@ -264,3 +264,7 @@ el.addEventListener('animationend', () => {
 
 // у элементов доступны события на стадии анимации
 el.addEventListener('transitionend', () => {});
+
+
+// (!) HTTP/2 значительно быстрее HTTP/1
+// обрабытывает параллельные запросы
