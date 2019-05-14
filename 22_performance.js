@@ -268,3 +268,30 @@ el.addEventListener('transitionend', () => {});
 
 // (!) HTTP/2 значительно быстрее HTTP/1
 // обрабытывает параллельные запросы
+
+
+// tools
+
+// - purifycss
+// минификация css
+// https://purifycss.online/
+// https://github.com/purifycss/purifycss
+
+
+// - react babel tools
+// хорошая практика не включать проп тайпс в продакшн сборку реакт проектов
+// https://www.npmjs.com/package/babel-plugin-transform-react-remove-prop-types
+
+// трансформирует компоненты в функции (реакт)
+// https://www.npmjs.com/package/babel-plugin-transform-react-class-to-function
+
+// конвертирует jsx в инлайн объекты (реакт)
+// https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-inline-elements
+
+// сохраняет отдельно jsx узлы
+// https://github.com/dropbox/ts-transform-react-constant-elements
+
+
+// - prepack
+// отптимизатор js
+// https://prepack.io/
