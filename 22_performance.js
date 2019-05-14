@@ -163,8 +163,8 @@ contain: none | strict | content | [ size || layout || style || paint ]
 // Вместо скриптов социальных сетей использовать прямые ссылки
 
 
-// рекомендации
 
+// - рекомендации
 // Чем больше ресурсов и чем они тяжелее, тем дольше загрузка страницы и выше процент отказов пользователей
 // для оптимальной работы должно получится не более 25 баллов в сумме (книга Барбара Бермс в книге Lean Websites)
 // - фоновое видео              - 15
@@ -180,22 +180,12 @@ contain: none | strict | content | [ size || layout || style || paint ]
 
 
 
-// - инструменды для оптимизации
-
-// REACT
-// - source-map-explorer
-// утилита для оценки производительности
-// https://www.npmjs.com/package/source-map-explorer
-
-// - (!!! TO USE) webpack-bundle-analyzer
-// https://www.npmjs.com/package/webpack-bundle-analyzer
-
-// - fastdom
-// исп для анимаций
-// фрейминг без requestAnimationFrame
-// + к производительности
-// имеет смысл исп при прямом обращении к дом (те не реакт)
-// https://github.com/wilsonpage/fastdom
+// - цели
+// <= 200kb uncompressed js (initial)
+// <= 100kb uncompressed css (initial)
+// <= 6kb first call HTTP/1
+// <= 20kb first call HTTP/2
+// coverage >=90% (см вкладку coverage в дев тулз)
 
 
 // - стиль кода
@@ -271,6 +261,22 @@ el.addEventListener('transitionend', () => {});
 
 
 // tools
+
+// REACT
+// - source-map-explorer
+// утилита для оценки производительности
+// https://www.npmjs.com/package/source-map-explorer
+
+// - (!!! TO USE) webpack-bundle-analyzer
+// https://www.npmjs.com/package/webpack-bundle-analyzer
+
+// - fastdom
+// исп для анимаций
+// фрейминг без requestAnimationFrame
+// + к производительности
+// имеет смысл исп при прямом обращении к дом (те не реакт)
+// https://github.com/wilsonpage/fastdom
+
 
 // - purifycss
 // минификация css
