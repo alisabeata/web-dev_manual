@@ -301,3 +301,28 @@ el.addEventListener('transitionend', () => {});
 // - prepack
 // отптимизатор js
 // https://prepack.io/
+
+
+
+
+// - webpack splitting
+// динамический импорт созаёт отдельный бандл, с возможностью дальнейшей загрузки по опр событию
+import Listener from './listener';
+const getModal = () => import('./src/modal');
+
+Listener.on('someEventForModalLoading', () => {
+  getModal().then(module => {
+    const madalTarget = document.getElementById('modal');
+    
+    module.initModal(madalTarget);
+  });
+});
+
+
+// загрузка подключаемых модулей
+
+// before
+import {TweenMax} from 'gsap';
+
+// after
+const getTweenMax = () => import('gsap');
