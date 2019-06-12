@@ -326,3 +326,10 @@ import {TweenMax} from 'gsap';
 
 // after
 const getTweenMax = () => import('gsap');
+
+
+
+// загрузка модуля с параметром
+const getStyleButton = (color) => import(`./src/buttn-${color}`);
+
+getStyleButton('red');
