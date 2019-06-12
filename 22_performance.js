@@ -333,3 +333,26 @@ const getTweenMax = () => import('gsap');
 const getStyleButton = (color) => import(`./src/buttn-${color}`);
 
 getStyleButton('red');
+
+
+// magic comments
+// https://webpack.js.org/api/module-methods#magic-comments
+
+// Single target
+import(
+  /* webpackChunkName: "my-chunk-name" */
+  /* webpackMode: "lazy" */
+  'module'
+);
+
+// Multiple possible targets
+import(
+  /* webpackInclude: /\.json$/ */
+  /* webpackExclude: /\.noimport\.json$/ */
+  /* webpackChunkName: "my-chunk-name" */
+  /* webpackMode: "lazy" */
+  /* webpackPrefetch: true */ 
+  /* webpackPreload: true */
+  `./locale/${language}`
+);
+import(/* webpackIgnore: true */ 'ignored-module.js');
