@@ -356,3 +356,5 @@ import(
   `./locale/${language}`
 );
 import(/* webpackIgnore: true */ 'ignored-module.js');
+
+// webpackPrefetch: true -- уменьшает делей при отрисовке компонента
