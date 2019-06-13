@@ -358,3 +358,4 @@ import(
 import(/* webpackIgnore: true */ 'ignored-module.js');
 
 // webpackPrefetch: true -- уменьшает делей при отрисовке компонента
+// https://medium.com/webpack/link-rel-prefetch-preload-in-webpack-51a52358f84c
