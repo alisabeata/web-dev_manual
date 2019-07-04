@@ -1,6 +1,9 @@
 // network
 
 
+// https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+
+
 // - restAPI
 // модель описания данных
 // стандарт описания запросов (https://habr.com/ru/post/351890/)
