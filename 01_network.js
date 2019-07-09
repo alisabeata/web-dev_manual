@@ -39,7 +39,7 @@ webSocket.onclose = function (event) {
 // On the MacBook, open up Safari and go to Develop → {{NAME_OF_YOUR_IPHONE}} and select “Connect via Network”
 // Open up a terminal and run the command “ifconfig” to see the list of current network interfaces and take note of the IP address of the last entry in the list
 ifconfig
-// >> inet 169.254.145.56   // example
+// >> inet 169.254.145.56 netmask 0xff000000 ...  // example
 
 // On your phone, in Safari, use the IP address to access your locally running website. For example, if you use create-react-app, instead of going to http://localhost:3000, with the IP I got here, the address to use is http://169.254.145.56:3000 (don’t forget the http:// prefix)
 
