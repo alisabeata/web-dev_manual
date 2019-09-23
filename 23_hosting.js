@@ -60,3 +60,10 @@ pm2 startup ubuntu  // генерация скрипта автозапуска 
 
 // перезапуск сервера
 sudo reboot
+
+
+
+
+
+// database
+// https://firebase.google.com/
