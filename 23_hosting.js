@@ -65,5 +65,23 @@ sudo reboot
 
 
 
-// database
+// - database
 // https://firebase.google.com/
+yarn add firebase
+
+// adding
+// https://console.firebase.google.com/u/0/project/<DATABASE_NAME>/settings/serviceaccounts/adminsdk
+
+import firebase from 'firebase';
+
+export const firebaseConfig = {
+  apiKey: '',
+  authDomain: '<DATABASE_NAME>.firebaseapp.com',
+  databaseURL: 'https://<DATABASE_NAME>.firebaseio.com',
+  projectId: '<DATABASE_NAME>',
+  storageBucket: '<DATABASE_NAME>.appspot.com',
+  messagingSenderId: '',
+  appId: ''
+};
+
+firebase.initializeApp(firebaseConfig);
