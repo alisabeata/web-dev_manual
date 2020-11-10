@@ -13,6 +13,7 @@
 // justify-content: (flex-start, flex-end, center, space-between, space-around)
 // flex-direction: (row, row-reverse, column, column-reverse)
 // align-items: (stretch, flex-start, flex-end, center, baseline)
+// align-content: (flex-start, flex-end, center, space-between, space-around)
 
 //  к элементу
 // align-self: (stretch, flex-start, flex-end, center, baseline)
